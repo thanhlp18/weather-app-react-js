@@ -1,5 +1,14 @@
 .App {
   text-align: center;
+  height: 100vh;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App > div {
+  width: 1280px;
 }
 
 .App-logo {
@@ -34,5 +43,16 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+
+/* Respoinsive */
+
+@media screen and (max-width: 900px){
+  .App > div {
+    width: 100%;
+    height: max-content;
+    margin: 16px;
   }
 }

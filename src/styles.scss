@@ -1,0 +1,15 @@
+.primary-text {
+    color: black;
+    &.bold-text {
+        font-weight: bold;
+    }
+}
+
+.secondary-text {
+    color: #ccc;
+}
+
+.text-icon-decoration {
+    display: inline-block;
+    margin: 0 16px;
+}
