@@ -1,13 +1,10 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import SearchIcon from '@mui/icons-material/Search';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import { alpha, styled } from '@mui/material/styles';
+import { useState } from 'react';
+import { AsyncPaginate } from "react-select-async-paginate";
+import { GEO_API_URL, geoApiOptions, handleCityApi } from 'api/cityApi';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -37,7 +34,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(AsyncPaginate)(({ theme }) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -54,7 +51,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchBar() {
+export default function SearchBar({ onSearchChange }) {
+    const [search, setSearch] = useState(null)
+
+
+
+    const loadOptions = handleCityApi
+    const handleOnChangeSearch = (searchData) => {
+        setSearch(searchData);
+        onSearchChange(searchData)
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             {/* <AppBar position="static"> */}
@@ -65,7 +72,10 @@ export default function SearchBar() {
                     </SearchIconWrapper>
                     <StyledInputBase
                         placeholder="Search…"
-                        inputProps={{ 'aria-label': 'Search for places...' }}
+                        value={search}
+                        debounceTimeout={600}
+                        onChange={handleOnChangeSearch}
+                        loadOptions={loadOptions}
                     />
                 </Search>
             </Toolbar>

@@ -3,45 +3,41 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Header from './components/Header';
-import WeatherCard from './components/WeatherCard';
 import './styles.scss';
 
-
+import randomQuoteApi from 'api/randomQuote'
+import { useEffect, useState } from 'react';
 const dayOfWeel = [0, 1, 2, 3, 4, 5, 6]
 
-function Content(props) {
+
+function Content({ weatherData }) {
+    const [quote, setQuote] = useState({})
     const theme = createTheme();
+    if (weatherData) {
+        var humidity = weatherData.main.humidity
+        var pressure = weatherData.main.pressure
+        var windSpeed = weatherData.wind.speed
+    }
+
+    useEffect(() => {
+        randomQuoteApi().then((res) => {
+            setQuote({
+                text: res.quote.text,
+                author: res.quote.author
+
+            })
+        })
+    }, [])
+
 
     return (
         <Grid className='content' container sx={{ paddingRight: '24px', paddingLeft: '24px', alignContent: 'flex-start' }}>
+
             <Header />
-            {/* Week's weather list */}
-            <Grid flexDirection='row' sx={{
-                display: 'flex',
-                flexWrap: 'no-wrap',
-                gap: theme.spacing(2),
-                overflowX: 'scroll',
-                width: '100%',
-                justifyContent: 'space-between'
-            }}>
 
-                {dayOfWeel.map((day) => {
-                    console.log(day);
-                    return (
-                        <Grid key={day} item sx={{
-                            minWidth: '96px'
-                        }}  >
-                            <WeatherCard day={day} sx={{ flexGrow: '1' }} />
-                        </Grid>
-                    )
-
-                })
-
-                }
-            </Grid>
 
             {/* Today's hightlight */}
-            <Grid container mt={theme.spacing(5)}>
+            <Grid container mt={theme.spacing(3)}>
                 <Typography
                     variant="h6"
                     noWrap
@@ -49,7 +45,6 @@ function Content(props) {
                     href="/"
                     sx={{
                         mr: 2,
-                        fontFamily: 'monospace',
                         fontWeight: 700,
                         letterSpacing: '.3rem',
                         color: 'inherit',
@@ -63,7 +58,7 @@ function Content(props) {
                 <Grid container spacing={theme.spacing(3)} mb='24px'>
                     <Grid container item sm={12} spacing={theme.spacing(3)}>
                         <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
+                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%', minHeight: '250px' }}>
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
                                     <Grid container
                                         flexDirection='row'
@@ -71,11 +66,14 @@ function Content(props) {
                                     >
                                         <Grid>
                                             <Typography variant="h6" component="h6">
-                                                UV Index
+                                                Humidity
                                             </Typography>
                                             <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
+                                                <img src="https://img.icons8.com/fluency-systems-regular/96/null/humidity.png" width={'80%'} />
                                             </Grid>
+                                            <Typography variant="h4" component="h6">
+                                                {!!humidity ? humidity : ""}%
+                                            </Typography>
 
                                         </Grid>
 
@@ -84,7 +82,7 @@ function Content(props) {
                             </Card >
                         </Grid>
                         <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
+                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%', minHeight: '250px' }}>
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
                                     <Grid container
                                         flexDirection='row'
@@ -92,11 +90,14 @@ function Content(props) {
                                     >
                                         <Grid>
                                             <Typography variant="h6" component="h6">
-                                                Wind Status
+                                                Pressure
                                             </Typography>
                                             <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
+                                                <img src="https://img.icons8.com/fluency-systems-regular/96/null/barometer-gauge.png" width={'80%'} />
                                             </Grid>
+                                            <Typography variant="h4" component="h6">
+                                                {!!pressure ? pressure : ""} hPa
+                                            </Typography>
 
                                         </Grid>
 
@@ -104,8 +105,8 @@ function Content(props) {
                                 </CardContent>
                             </Card >
                         </Grid>
-                        <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
+                        <Grid item sm={4} sx={{ minHeight: '250px' }}>
+                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%', minHeight: '250px' }}>
                                 <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
                                     <Grid container
                                         flexDirection='row'
@@ -113,76 +114,13 @@ function Content(props) {
                                     >
                                         <Grid>
                                             <Typography variant="h6" component="h6">
-                                                UV Index
+                                                Wind speed
                                             </Typography>
                                             <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
-                                            </Grid>
-
-                                        </Grid>
-
-                                    </Grid>
-                                </CardContent>
-                            </Card >
-                        </Grid>
-                    </Grid>
-                    <Grid container item sm={12} spacing={theme.spacing(3)}>
-                        <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
-                                <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
-                                    <Grid container
-                                        flexDirection='row'
-                                        justifyContent='center'
-                                    >
-                                        <Grid>
-                                            <Typography variant="h6" component="h6">
-                                                UV Index
+                                                <img src="https://img.icons8.com/sf-regular-filled/48/null/wind.png" width="80%" />                                            </Grid>
+                                            <Typography variant="h4" component="h6">
+                                                {!!windSpeed ? windSpeed : ""} m/s
                                             </Typography>
-                                            <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
-                                            </Grid>
-
-                                        </Grid>
-
-                                    </Grid>
-                                </CardContent>
-                            </Card >
-                        </Grid>
-                        <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
-                                <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
-                                    <Grid container
-                                        flexDirection='row'
-                                        justifyContent='center'
-                                    >
-                                        <Grid>
-                                            <Typography variant="h6" component="h6">
-                                                Wind Status
-                                            </Typography>
-                                            <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
-                                            </Grid>
-
-                                        </Grid>
-
-                                    </Grid>
-                                </CardContent>
-                            </Card >
-                        </Grid>
-                        <Grid item sm={4}>
-                            <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '10%' }}>
-                                <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
-                                    <Grid container
-                                        flexDirection='row'
-                                        justifyContent='center'
-                                    >
-                                        <Grid>
-                                            <Typography variant="h6" component="h6">
-                                                UV Index
-                                            </Typography>
-                                            <Grid sx={{ margin: '24px' }}>
-                                                <img src='https://cdn-icons-png.flaticon.com/512/1163/1163661.png' alt='' width={'80%'} padding={'16px'} />
-                                            </Grid>
 
                                         </Grid>
 
@@ -192,6 +130,17 @@ function Content(props) {
                         </Grid>
                     </Grid>
 
+
+                </Grid>
+
+                <Grid sx={{ width: '100%', height: '100%' }}>
+                    <Card sx={{ boxShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;', borderRadius: '2rem', width: '100%' }}>
+                        <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '24px 8px' }}>
+                            <Typography variant="h6" component="h6" sx={{ padding: '16px' }}>
+                                {quote?.text}
+                            </Typography>
+                        </CardContent>
+                    </Card >
                 </Grid>
             </Grid>
 
