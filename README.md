@@ -1,20 +1,19 @@
-    # Overview
-    This is a practice project for learning React JS. The project involves using React DOM, working with APIs, and managing state.
+# Overview
+This is a practice project for learning React JS. The project involves using React DOM, working with APIs, and managing state.
 
 
-    # Features
+# Features
     1. Search and suggest locations in Vietnam based on user input
     2. Display the current weather conditions for the selected city
     3. Display the current weather conditions for the selected city
 
-    # Technical
-    ## Frameworks and libraries
+# Technical
+## Frameworks and libraries
     1. React JS
     2. Material UI
-    ## Other technologies
+## Other technologies
     1. SCSS
-
-    # APIs
+# APIs
     1. <a href="http://geodb-cities-api.wirefreethought.com/docs/api">GeoDB Cities API</a>
     2. <a href="https://openweathermap.org/">OpenWeather</a>
     2. <a href="https://type.fit/api/quotes">Random Quote API</a>
