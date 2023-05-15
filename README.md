@@ -4,10 +4,10 @@
 3. Show the random quote
 
 # Technical
-##Framework and library
+## Framework and library
 1. React JS
 2. Material UI
-##Others
+## Others
 1. SCSS
 
 # API
