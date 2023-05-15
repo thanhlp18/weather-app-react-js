@@ -5,7 +5,7 @@ This is a practice project for learning React JS. The project involves using Rea
 # Features
     1. Search and suggest locations in Vietnam based on user input
     2. Display the current weather conditions for the selected city
-    3. Display the current weather conditions for the selected city
+    3. Show a random quote
 
 # Technical
 ## Frameworks and libraries
